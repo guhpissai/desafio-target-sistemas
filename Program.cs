@@ -1,18 +1,20 @@
-﻿using System.Text.Json;
-using DesafioTarget.Models;
+﻿using DesafioTarget.Models;
+using DesafioTarget.Services;
+using DesafioTarget.Helpers;
 
-var json = File.ReadAllText("./Utils/vendas.json");
+var wrapper = JsonHelper.Deserialize<VendasWrapper>("./Data/vendas.json");
 
-var options = new JsonSerializerOptions
-{
-  PropertyNameCaseInsensitive = true
-};
-
-var wrapper = JsonSerializer.Deserialize<VendasWrapper>(json, options);
+var regra = new RegraComissaoPadrao();
+var calculaComissao = new CalculadoraComissao(regra);
 
 if (wrapper?.Vendas is not null)
 {
-  Comissao.CalculaComissao(wrapper.Vendas);
+  var comissoes = calculaComissao.Calcular(wrapper.Vendas);
+
+  foreach (var comissao in comissoes)
+  {
+    Console.WriteLine(comissao.ToString());
+  }
 }
 
 
