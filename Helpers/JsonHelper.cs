@@ -1,4 +1,5 @@
 using System.Text.Json;
+using DesafioTarget.Models;
 
 namespace DesafioTarget.Helpers;
 
@@ -16,4 +17,8 @@ public static class JsonHelper
     return JsonSerializer.Deserialize<T>(json, options)!;
   }
 
+  public static void SaveChanges(Estoque estoque)
+  {
+    File.WriteAllText("./Data/estoque.json", JsonSerializer.Serialize(estoque, new JsonSerializerOptions { WriteIndented = true }));
+  }
 }
