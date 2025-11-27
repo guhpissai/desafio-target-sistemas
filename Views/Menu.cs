@@ -40,6 +40,7 @@ public static class Menu
 
         case 3:
           ConsoleHelper.MostrarStatus("Abrindo Calculadora de Juros...");
+          CalculadoraJurosView.Load();
           break;
 
         case 0:
