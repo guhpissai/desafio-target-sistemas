@@ -7,6 +7,8 @@ public class GerenciadorEstoque
 {
   private Estoque _estoque;
   private List<Movimentacao> _movimentacoes;
+  private readonly string estoquePath = "./Data/estoque.json";
+  private readonly string movimentacoesPath = "./Data/movimentacoes.json";
 
   public GerenciadorEstoque(Estoque estoque, List<Movimentacao> movimentacoes)
   {
@@ -14,48 +16,44 @@ public class GerenciadorEstoque
     _movimentacoes = movimentacoes;
   }
 
-  public int Entrada(int id, int quantidade)
+  public Produto? Entrada(int id, int quantidade)
   {
     var produtoEncontrado = _estoque.Produtos.FirstOrDefault(p => p.Id == id);
 
-    if (produtoEncontrado != null)
+    if (produtoEncontrado == null)
+      return null;
+
+    Console.WriteLine($"{produtoEncontrado.Descricao} | {produtoEncontrado.Estoque}");
+    produtoEncontrado.Estoque += quantidade;
+
+    _movimentacoes.Add(new Movimentacao()
     {
-      Console.WriteLine($"{produtoEncontrado.Descricao} | {produtoEncontrado.Estoque}");
-      produtoEncontrado.Estoque += quantidade;
+      Descricao = "Entrada",
+    });
 
-      _movimentacoes.Add(new Movimentacao()
-      {
-        Descricao = TipoMovimentacao.Entrada,
-      });
+    JsonHelper.SaveChanges(_estoque, estoquePath);
+    JsonHelper.SaveChanges(_movimentacoes, movimentacoesPath);
 
-      JsonHelper.SaveChanges(_estoque);
-      Console.WriteLine($"{produtoEncontrado.Descricao} | {produtoEncontrado.Estoque}");
-
-      return produtoEncontrado.Estoque;
-    }
-
-    return 0;
+    return produtoEncontrado;
   }
 
-  public int Saida(int id, int quantidade)
+  public Produto? Saida(int id, int quantidade)
   {
     var produtoEncontrado = _estoque.Produtos.FirstOrDefault(p => p.Id == id);
 
-    if (produtoEncontrado != null)
+    if (produtoEncontrado == null)
+      return null;
+
+    produtoEncontrado.Estoque -= quantidade;
+
+    _movimentacoes.Add(new Movimentacao()
     {
-      produtoEncontrado.Estoque -= quantidade;
+      Descricao = "Saída"
+    });
 
-      _movimentacoes.Add(new Movimentacao()
-      {
-        Descricao = TipoMovimentacao.Saida,
-      });
+    JsonHelper.SaveChanges(_estoque, estoquePath);
+    JsonHelper.SaveChanges(_movimentacoes, movimentacoesPath);
 
-      JsonHelper.SaveChanges(_estoque);
-      return produtoEncontrado.Estoque;
-    }
-
-    return 0;
+    return produtoEncontrado;
   }
-
-
 }

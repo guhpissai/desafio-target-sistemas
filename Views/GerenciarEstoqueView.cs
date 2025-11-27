@@ -8,58 +8,92 @@ public static class GerenciadorEstoqueView
 {
   public static void Load()
   {
-    var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
-    var movimentacoes = new List<Movimentacao>();
-    var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
-
-    Console.Clear();
-    ConsoleHelper.DesenharHeader("GERENCIAR ESTOQUE");
-
-    Console.WriteLine("");
-    Console.WriteLine("Selecione uma das opções: ");
-
-    Console.WriteLine("[1] - Adicionar Produtos");
-    Console.WriteLine("[2] - Remover Produtos");
-    Console.WriteLine("");
-    Console.WriteLine("[V] - Voltar");
-    Console.WriteLine("[0] - Encerrar");
-
-    var option = Console.ReadLine();
-
-    switch (option)
+    while (true)
     {
-      case "1":
-        var produtoEntrada = ProdutoInfo();
-        gerenciadorEstoque.Entrada(produtoEntrada.id, produtoEntrada.qtd);
-        break;
-      case "2":
-        var produtoSaida = ProdutoInfo();
-        gerenciadorEstoque.Saida(produtoSaida.id, produtoSaida.qtd);
-        break;
-      case "v":
-        Menu.Load();
-        break;
-      case "0":
-        ConsoleHelper.MostrarStatus("Encerrando...");
-        Console.Clear();
-        Environment.Exit(0);
-        break;
-      default:
-        ConsoleHelper.MostrarErro("Entrada inválida! Digite apenas números.");
-        Load();
-        break;
+      Console.Clear();
+
+      var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
+      var movimentacoes = new List<Movimentacao>();
+      var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
+
+      ConsoleHelper.DesenharHeader("GERENCIAR ESTOQUE");
+
+      Console.WriteLine("");
+      Console.WriteLine("Selecione uma das opções: ");
+
+      Console.WriteLine("[1] - Adicionar Produtos");
+      Console.WriteLine("[2] - Remover Produtos");
+      Console.WriteLine("");
+      Console.WriteLine("[V] - Voltar");
+      Console.WriteLine("[0] - Encerrar");
+
+      var option = Console.ReadLine();
+
+      switch (option)
+      {
+        case "1":
+          var entrada = ProdutoInfo();
+          var prdEntrada = gerenciadorEstoque.Entrada(entrada.id, entrada.qtd);
+
+          if (prdEntrada == null)
+          {
+            ConsoleHelper.MostrarErro("Produto não encontrado");
+            continue;
+          }
+
+          ConsoleHelper.MostrarStatus("Adicionando produto(s)...");
+          Console.WriteLine($"Id: {prdEntrada.Id} - Novo estoque: {prdEntrada.Estoque}");
+          Console.ReadKey();
+          break;
+        case "2":
+          var saida = ProdutoInfo();
+          var prdSaida = gerenciadorEstoque.Saida(saida.id, saida.qtd);
+
+          if (prdSaida == null)
+          {
+            ConsoleHelper.MostrarErro("Produto não encontrado");
+            continue;
+          }
+
+          ConsoleHelper.MostrarStatus("Removendo produto(s)...");
+          Console.WriteLine($"Id: {prdSaida.Id} - Novo estoque: {prdSaida.Estoque}");
+          Console.ReadKey();
+          break;
+        case "v" or "V":
+          return;
+        case "0":
+          ConsoleHelper.MostrarStatus("Encerrando aplicação...");
+          Environment.Exit(0);
+          break;
+        default:
+          ConsoleHelper.MostrarErro("Entrada inválida! Digite apenas números.");
+          break;
+      }
     }
   }
 
   private static (int id, int qtd) ProdutoInfo()
   {
-    Console.WriteLine("Digite o Id do produto:");
-    if (!int.TryParse(Console.ReadLine(), out var id))
-      ConsoleHelper.MostrarErro("Produto não encontrado! Verifique o ID informado.");
+    int id;
+    int qtd;
 
-    Console.WriteLine("Digite a quantidade: ");
-    if (!int.TryParse(Console.ReadLine(), out var qtd))
-      Console.WriteLine("Quantidade inválida! Digite apenas números inteiros.");
+    while (true)
+    {
+      Console.WriteLine("Digite o Id do produto:");
+      if (int.TryParse(Console.ReadLine(), out id))
+        break;
+
+      ConsoleHelper.MostrarErro("ID inválido! Digite um número inteiro.");
+    }
+
+    while (true)
+    {
+      Console.WriteLine("Digite a quantidade:");
+      if (int.TryParse(Console.ReadLine(), out qtd))
+        break;
+
+      ConsoleHelper.MostrarErro("Quantidade inválida! Digite apenas números inteiros.");
+    }
 
     return (id, qtd);
   }

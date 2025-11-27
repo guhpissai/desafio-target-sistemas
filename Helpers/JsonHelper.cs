@@ -17,8 +17,8 @@ public static class JsonHelper
     return JsonSerializer.Deserialize<T>(json, options)!;
   }
 
-  public static void SaveChanges(Estoque estoque)
+  public static void SaveChanges(object data, string path)
   {
-    File.WriteAllText("./Data/estoque.json", JsonSerializer.Serialize(estoque, new JsonSerializerOptions { WriteIndented = true }));
+    File.WriteAllText(path, JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }));
   }
 }
