@@ -47,6 +47,9 @@ public class GerenciadorEstoque : IGerenciadorEstoque
     if (produtoEncontrado == null)
       return null;
 
+    if (produtoEncontrado.Estoque < quantidade)
+      return null;
+
     produtoEncontrado.Estoque -= quantidade;
 
     _movimentacoes.Add(new Movimentacao()
