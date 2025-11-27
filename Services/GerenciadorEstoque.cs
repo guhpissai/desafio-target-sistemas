@@ -1,9 +1,10 @@
 using DesafioTarget.Helpers;
+using DesafioTarget.Interfaces;
 using DesafioTarget.Models;
 
 namespace DesafioTarget.Services;
 
-public class GerenciadorEstoque
+public class GerenciadorEstoque : IGerenciadorEstoque
 {
   private Estoque _estoque;
   private List<Movimentacao> _movimentacoes;
@@ -23,12 +24,14 @@ public class GerenciadorEstoque
     if (produtoEncontrado == null)
       return null;
 
-    Console.WriteLine($"{produtoEncontrado.Descricao} | {produtoEncontrado.Estoque}");
     produtoEncontrado.Estoque += quantidade;
 
     _movimentacoes.Add(new Movimentacao()
     {
       Descricao = "Entrada",
+      ProdutoId = produtoEncontrado.Id,
+      Quantidade = produtoEncontrado.Descricao,
+      Data = DateTime.Now
     });
 
     JsonHelper.SaveChanges(_estoque, estoquePath);

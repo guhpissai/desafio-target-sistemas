@@ -40,7 +40,6 @@ public static class Menu
 
         case 3:
           ConsoleHelper.MostrarStatus("Abrindo Calculadora de Juros...");
-          // Chamar a view correspondente aqui
           break;
 
         case 0:

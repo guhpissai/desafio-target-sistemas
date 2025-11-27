@@ -8,13 +8,14 @@ public static class GerenciadorEstoqueView
 {
   public static void Load()
   {
+
+    var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
+    var movimentacoes = new List<Movimentacao>();
+    var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
+
     while (true)
     {
       Console.Clear();
-
-      var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
-      var movimentacoes = new List<Movimentacao>();
-      var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
 
       ConsoleHelper.DesenharHeader("GERENCIAR ESTOQUE");
 
