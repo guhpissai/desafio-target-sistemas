@@ -36,7 +36,6 @@ public static class CalculadoraJurosView
 
       var juros = calculadora.Calcular(valor, data);
       var totalAtualizado = valor + juros;
-      ConsoleHelper.MostrarStatus("Calculando...");
       Console.Clear();
 
       Console.WriteLine("===== RESULTADO =====");

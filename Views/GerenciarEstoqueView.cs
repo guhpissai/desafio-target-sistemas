@@ -42,7 +42,6 @@ public static class GerenciadorEstoqueView
             continue;
           }
 
-          ConsoleHelper.MostrarStatus("Adicionando produto(s)...");
           Console.WriteLine($"Id: {prdEntrada.Id} - Novo estoque: {prdEntrada.Estoque}");
           Console.ReadKey();
           break;
@@ -56,14 +55,12 @@ public static class GerenciadorEstoqueView
             continue;
           }
 
-          ConsoleHelper.MostrarStatus("Removendo produto(s)...");
           Console.WriteLine($"Id: {prdSaida.Id} - Novo estoque: {prdSaida.Estoque}");
           Console.ReadKey();
           break;
         case "v" or "V":
           return;
         case "0":
-          ConsoleHelper.MostrarStatus("Encerrando aplicação...");
           Environment.Exit(0);
           break;
         default:

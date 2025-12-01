@@ -6,7 +6,6 @@ namespace DesafioTarget.Views;
 
 public static class CalculadoraComissaoView
 {
-
   public static void Load()
   {
     Console.Clear();

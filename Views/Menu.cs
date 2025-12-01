@@ -29,22 +29,18 @@ public static class Menu
       switch (option)
       {
         case 1:
-          ConsoleHelper.MostrarStatus("Abrindo Calculadora de Comissão...");
           CalculadoraComissaoView.Load();
           break;
 
         case 2:
-          ConsoleHelper.MostrarStatus("Abrindo Gerenciador de Estoque...");
           GerenciadorEstoqueView.Load();
           break;
 
         case 3:
-          ConsoleHelper.MostrarStatus("Abrindo Calculadora de Juros...");
           CalculadoraJurosView.Load();
           break;
 
         case 0:
-          ConsoleHelper.MostrarStatus("Encerrando aplicação...");
           return;
 
         default:
