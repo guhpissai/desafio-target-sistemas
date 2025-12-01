@@ -29,6 +29,6 @@ public static class CalculadoraComissaoView
     Console.ReadKey();
 
     Console.Clear();
-    Menu.Load();
+    return;
   }
 }

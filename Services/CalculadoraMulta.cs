@@ -4,7 +4,7 @@ namespace DesafioTarget.Services;
 
 public class CalculadoraMulta
 {
-  public IRegraMulta _regraMulta { get; set; }
+  private readonly IRegraMulta _regraMulta;
   public CalculadoraMulta(IRegraMulta regraMulta)
   {
     _regraMulta = regraMulta;
