@@ -10,8 +10,8 @@ public static class GerenciadorEstoqueView
   {
 
     var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
-    var movimentacoes = JsonHelper.Deserialize<List<Movimentacao>>("./Data/movimentacoes.json")
-      ?? [];
+    var wrapper = JsonHelper.Deserialize<MovimentacoesWrapper>("./Data/movimentacoes.json");
+    var movimentacoes = wrapper?.Movimentacoes ?? new List<Movimentacao>();
     var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
 
     while (true)
@@ -47,8 +47,8 @@ public static class GerenciadorEstoqueView
           Console.ReadKey();
           break;
         case "2":
-          var saida = ProdutoInfo();
-          var prdSaida = gerenciadorEstoque.Saida(saida.id, saida.qtd);
+          var (id, qtd) = ProdutoInfo();
+          var prdSaida = gerenciadorEstoque.Saida(id, qtd);
 
           if (prdSaida == null)
           {
