@@ -10,7 +10,8 @@ public static class GerenciadorEstoqueView
   {
 
     var estoque = JsonHelper.Deserialize<Estoque>("./Data/estoque.json");
-    var movimentacoes = new List<Movimentacao>();
+    var movimentacoes = JsonHelper.Deserialize<List<Movimentacao>>("./Data/movimentacoes.json")
+      ?? [];
     var gerenciadorEstoque = new GerenciadorEstoque(estoque, movimentacoes);
 
     while (true)
@@ -61,8 +62,7 @@ public static class GerenciadorEstoqueView
         case "v" or "V":
           return;
         case "0":
-          Environment.Exit(0);
-          break;
+          return;
         default:
           ConsoleHelper.MostrarErro("Entrada inválida! Digite apenas números.");
           break;

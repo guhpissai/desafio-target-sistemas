@@ -26,18 +26,8 @@ public class GerenciadorEstoque : IGerenciadorEstoque
 
     produtoEncontrado.Estoque += quantidade;
 
-
-    _movimentacoes.Add(new Movimentacao()
-    {
-      Descricao = "Entrada",
-      ProdutoId = produtoEncontrado.Id,
-      Quantidade = quantidade,
-      Data = DateTime.Now
-    });
-
-    var wrapper = new MovimentacoesWrapper { Movimentacoes = _movimentacoes };
-    JsonHelper.SaveChanges(_estoque, estoquePath);
-    JsonHelper.SaveChanges(wrapper, movimentacoesPath);
+    RegistrarMovimentacao("Entrada", id, quantidade);
+    PersistirDados();
 
     return produtoEncontrado;
   }
@@ -54,18 +44,26 @@ public class GerenciadorEstoque : IGerenciadorEstoque
 
     produtoEncontrado.Estoque -= quantidade;
 
+    RegistrarMovimentacao("Saida", id, quantidade);
+    PersistirDados();
+
+    return produtoEncontrado;
+  }
+
+  private void RegistrarMovimentacao(string tipo, int id, int qtd)
+  {
     _movimentacoes.Add(new Movimentacao()
     {
-      Descricao = "Saída",
-      ProdutoId = produtoEncontrado.Id,
-      Quantidade = quantidade,
+      Descricao = tipo,
+      ProdutoId = id,
+      Quantidade = qtd,
       Data = DateTime.Now
     });
-
+  }
+  private void PersistirDados()
+  {
     var wrapper = new MovimentacoesWrapper { Movimentacoes = _movimentacoes };
     JsonHelper.SaveChanges(_estoque, estoquePath);
     JsonHelper.SaveChanges(wrapper, movimentacoesPath);
-
-    return produtoEncontrado;
   }
 }
