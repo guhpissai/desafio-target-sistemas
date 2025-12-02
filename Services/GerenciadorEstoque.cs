@@ -57,7 +57,7 @@ public class GerenciadorEstoque : IGerenciadorEstoque
       Descricao = tipo,
       ProdutoId = id,
       Quantidade = qtd,
-      Data = DateTime.Now
+      Data = DateTime.Now.ToString()
     });
   }
   private void PersistirDados()

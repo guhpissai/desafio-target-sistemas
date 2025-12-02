@@ -72,6 +72,10 @@ public static class GerenciadorEstoqueView
 
   private static (int id, int qtd) ProdutoInfo()
   {
+    Console.Clear();
+
+    ConsoleHelper.DesenharHeader("GERENCIAR ESTOQUE");
+
     int id;
     int qtd;
 

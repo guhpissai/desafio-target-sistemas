@@ -1,0 +1,11 @@
+{
+  "movimentacoes": [
+    {
+      "Id": "19a0922e-bfc9-4c3a-b11b-813c06f54053",
+      "Descricao": "Entrada",
+      "Quantidade": 1,
+      "Data": "01/12/2025 21:22:35",
+      "ProdutoId": 101
+    }
+  ]
+}
