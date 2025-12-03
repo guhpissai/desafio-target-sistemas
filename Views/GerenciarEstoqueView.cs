@@ -26,8 +26,7 @@ public static class GerenciadorEstoqueView
       Console.WriteLine("[1] - Adicionar Produtos");
       Console.WriteLine("[2] - Remover Produtos");
       Console.WriteLine("");
-      Console.WriteLine("[V] - Voltar");
-      Console.WriteLine("[0] - Encerrar");
+      Console.WriteLine("[0] - Voltar");
 
       var option = Console.ReadLine();
 
@@ -43,8 +42,7 @@ public static class GerenciadorEstoqueView
             continue;
           }
 
-          Console.WriteLine($"Id: {prdEntrada.Id} - Novo estoque: {prdEntrada.Estoque}");
-          Console.ReadKey();
+          SaidaConsole(prdEntrada.Id, prdEntrada.Estoque);
           break;
         case "2":
           var (id, qtd) = ProdutoInfo();
@@ -56,11 +54,8 @@ public static class GerenciadorEstoqueView
             continue;
           }
 
-          Console.WriteLine($"Id: {prdSaida.Id} - Novo estoque: {prdSaida.Estoque}");
-          Console.ReadKey();
+          SaidaConsole(prdSaida.Id, prdSaida.Estoque);
           break;
-        case "v" or "V":
-          return;
         case "0":
           return;
         default:
@@ -98,5 +93,14 @@ public static class GerenciadorEstoqueView
     }
 
     return (id, qtd);
+  }
+
+  private static void SaidaConsole(int prdId, int prdEstoque)
+  {
+    Console.WriteLine("");
+    Console.WriteLine($"Id: {prdId} - Novo estoque: {prdEstoque}");
+    Console.WriteLine("");
+    Console.WriteLine("Aperte ENTER para voltar...");
+    Console.ReadKey();
   }
 }

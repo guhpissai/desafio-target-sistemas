@@ -1,4 +1,6 @@
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace DesafioTarget.Helpers;
 
@@ -7,7 +9,8 @@ public static class JsonHelper
   private static readonly JsonSerializerOptions _options = new()
   {
     PropertyNameCaseInsensitive = true,
-    WriteIndented = true
+    WriteIndented = true,
+    Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
   };
 
   public static T Deserialize<T>(string path) where T : new()
